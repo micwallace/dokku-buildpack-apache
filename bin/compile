@@ -43,7 +43,7 @@ chmod 0775 -R /app
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do
-  echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
+echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
 done
 touch /app/apache/logs/error_log
 touch /app/apache/logs/access_log
