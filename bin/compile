@@ -31,16 +31,16 @@ curl --silent --max-time 60 --location "$PHP_URL" | tar xz
 # update config files
 cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
 cp $LP_DIR/conf/php.ini php
-cp $LP_DIR/conf/php-fpm.conf php/etc
+#cp $LP_DIR/conf/php-fpm.conf php/etc
 
 # make php available on bin
 mkdir -p bin
 ln -s /app/php/bin/php bin/php
 ln -s /app/php/sbin/php-fpm bin/php-fpm
 
-# install dependent libraries
-echo "-----> Installing dependent libraries"
-apt-get install -y libjpeg62 libxml2 libcurl3
+# install dependent libraries (fpm testing stuff)
+# echo "-----> Installing dependent libraries"
+# apt-get install -y libjpeg62 libxml2 libcurl3
 
 # permissions
 adduser daemon www-data
@@ -57,8 +57,9 @@ tail -F /app/apache/logs/error_log &
 tail -F /app/apache/logs/access_log &
 export LD_LIBRARY_PATH=/app/php/ext
 export PHP_INI_SCAN_DIR=/app
-echo "Launching php"
-exec php-fpm -p "/app/php"
+# Uncomment if you want to try to get fpm working
+#echo "Launching php"
+#exec php-fpm -p "/app/php"
 echo "Launching apache"
 exec /app/apache/bin/httpd -DNO_DETACH
 EOF
