@@ -39,7 +39,7 @@ ln -s /app/php/sbin/php-fpm bin/php-fpm
 
 # install dependent libraries
 echo "-----> Installing dependent libraries"
-apt-get install libjpeg62 libxml2 libcurl3
+apt-get install -y libjpeg62 libxml2 libcurl3
 
 # permissions
 adduser daemon www-data
