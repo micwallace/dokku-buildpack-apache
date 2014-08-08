@@ -39,13 +39,15 @@ ln -s /app/php/bin/php bin/php
 ln -s /app/php/sbin/php-fpm bin/php-fpm
 
 # install dependent libraries (fpm testing stuff)
-# echo "-----> Installing dependent libraries"
+echo "-----> Installing dependent libraries"
 # apt-get install -y libjpeg62 libxml2 libcurl3
 
 # permissions
+echo "-----> Setting up users and folder permissions"
 adduser daemon www-data
 chgrp www-data -R /app
 chmod 0775 -R /app
+chmod 0777 -R /app/clientdocs
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do
