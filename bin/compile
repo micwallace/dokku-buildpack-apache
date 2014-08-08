@@ -46,10 +46,10 @@ echo "-----> Installing dependent libraries"
 echo "-----> Setting up users and folder permissions"
 adduser daemon www-data
 chgrp www-data -R /app
-chmod 0775 -R /app
-chmod 777 -R /app/clientdocs
 
 cat >>boot.sh <<EOF
+chmod 0775 -R /app
+chmod 777 -R /app/clientdocs
 for var in \`env|cut -f1 -d=\`; do
 echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
 done
