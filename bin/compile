@@ -50,7 +50,7 @@ chgrp www-data -R /app
 cat >>boot.sh <<EOF
 chmod 0775 -R /app
 # Check if docs directory exists, if not copy template and set permissions
-if [ -z `ls -a /app/docs/*` ]; then
+if [ `find /app/docs -prune -empty` ] then
   cp /apps/docs-template/* /app/docs/
   chmod 0777 -R /app/docs
 fi
