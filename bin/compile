@@ -49,7 +49,14 @@ chgrp www-data -R /app
 
 cat >>boot.sh <<EOF
 chmod 0775 -R /app
-chmod 0777 -R /app/docs
+# Check if docs directory exists, if not copy template and set permissions
+shopt -s nullglob
+shopt -s dotglob # To include hidden files
+files=(/app/docs/*)
+if [ ${#files[@]} -eq 0 ]; then
+  cp /apps/docs-template/* /app/docs/
+  chmod 0777 -R /app/docs
+fi
 for var in \`env|cut -f1 -d=\`; do
 echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
 done
