@@ -61,6 +61,8 @@ export PHP_INI_SCAN_DIR=/app
 # Uncomment if you want to try to get fpm working
 #echo "Launching php"
 #exec php-fpm -p "/app/php"
+echo "Launching nodejs"
+exec nodejs /app/api/server.js &
 echo "Launching apache"
 exec /app/apache/bin/httpd -DNO_DETACH
 EOF
