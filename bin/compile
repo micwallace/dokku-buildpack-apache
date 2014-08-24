@@ -51,7 +51,7 @@ cat >>boot.sh <<EOF
 chmod 0775 -R /app
 # Check if docs directory exists, if not copy template and set permissions
 if find /app/docs/ -maxdepth 0 -empty | read v; then
-  cp -r /app/docs-template/ /app/docs
+  cp -r /app/docs-template/* /app/docs
   chmod 0777 -R /app/docs
 fi
 for var in \`env|cut -f1 -d=\`; do
