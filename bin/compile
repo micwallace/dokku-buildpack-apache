@@ -45,12 +45,13 @@ echo "-----> Installing dependent libraries"
 # permissions
 echo "-----> Setting file permissions"
 adduser daemon www-data
-chgrp -R www-data /app
+chgrp www-data -R /app
 
 # Create Bootscript
 cat >>boot.sh <<EOF
 # runtime permissions
 chmod 0775 -R /app
+# Check if docs directory exists, if not copy template and set permissions
 if [ -d /app/docs ]; then
   chmod 0777 -R /app/docs
 fi
