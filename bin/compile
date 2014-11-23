@@ -46,6 +46,7 @@ echo "-----> Installing dependent libraries"
 echo "-----> Setting file permissions"
 adduser daemon www-data
 chgrp www-data -R /app
+chmod 0775 -R /app
 
 # Create Bootscript
 cat >>boot.sh <<EOF
