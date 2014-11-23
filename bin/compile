@@ -48,7 +48,7 @@ cat >>boot.sh <<EOF
 adduser daemon www-data
 chgrp -R www-data /app
 chmod 0775 -R /app
-if [ -d "$DIRECTORY" ]; then
+if [ -d "/app/docs" ]; then
   chmod 0777 -R /app/docs
 fi
 for var in \`env|cut -f1 -d=\`; do
