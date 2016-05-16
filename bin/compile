@@ -39,19 +39,19 @@ ln -s /app/php/bin/php bin/php
 ln -s /app/php/sbin/php-fpm bin/php-fpm
 
 # install dependent libraries (fpm testing stuff)
-echo "-----> Installing dependent libraries"
+# echo "-----> Installing dependent libraries"
 # apt-get install -y libjpeg62 libxml2 libcurl3
 
 # permissions
-echo "-----> Setting file permissions"
-adduser daemon www-data
-chgrp www-data -R /app
-chmod 775 -R /app
+# echo "-----> Setting file permissions"
+# adduser daemon www-data
+# chgrp www-data -R /app
+# chmod 775 -R /app
 
 # Create Bootscript
 cat >>boot.sh <<EOF
 # runtime permissions
-chmod 775 -R /app
+chmod 755 -R /app
 # Check if docs directory exists, if not copy template and set permissions
 if [ -d /app/docs ]; then
   chmod 777 -R /app/docs
