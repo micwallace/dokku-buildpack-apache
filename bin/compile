@@ -69,7 +69,7 @@ export PHP_INI_SCAN_DIR=/app
 #echo "Launching php"
 #exec php-fpm -p "/app/php"
 echo "Launching nodejs"
-exec nodejs /app/api/server.js &
+exec node /app/api/server.js &
 echo "Launching apache"
 exec /app/apache/bin/httpd -DNO_DETACH
 EOF
