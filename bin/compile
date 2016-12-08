@@ -4,12 +4,6 @@
 # fail fast
 set -e
 
-# config
-APACHE_VERSION="2.4.7"
-APACHE_PATH="apache"
-PHP_VERSION="5.5.9"
-PHP_PATH="php"
-
 BIN_DIR=$(dirname $0)
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -18,40 +12,15 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 # include .files when moving things around
 shopt -s dotglob
 
-cd $BUILD_DIR
-
-APACHE_URL="https://content.wallaceit.com.au/buildpackassets/apache-$APACHE_VERSION.tar.gz"
-echo "-----> Bundling Apache version $APACHE_VERSION"
-curl --silent --max-time 60 --location "$APACHE_URL" | tar xz
-
-PHP_URL="https://content.wallaceit.com.au/buildpackassets/php-$PHP_VERSION.tar.gz"
-echo "-----> Bundling PHP version $PHP_VERSION"
-curl --silent --max-time 60 --location "$PHP_URL" | tar xz
-
 # update config files
-cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
-cp $LP_DIR/conf/php.ini php
+#cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
+#cp $LP_DIR/conf/php.ini php
 #cp $LP_DIR/conf/php-fpm.conf php/etc
-
-# make php available on bin
-mkdir -p bin
-ln -s /app/php/bin/php bin/php
-ln -s /app/php/sbin/php-fpm bin/php-fpm
-
-# install dependent libraries (fpm testing stuff)
-# echo "-----> Installing dependent libraries"
-# apt-get install -y libjpeg62 libxml2 libcurl3
-
-# permissions
-# echo "-----> Setting file permissions"
-# adduser daemon www-data
-# chgrp www-data -R /app
-# chmod 775 -R /app
 
 # Create Bootscript
 cat >>boot.sh <<EOF
 # runtime permissions
-chmod 755 -R /app
+#chmod 755 -R /app
 # Check if docs directory exists, if not copy template and set permissions
 if [ -d /app/docs ]; then
   chmod 777 -R /app/docs
