@@ -15,8 +15,8 @@ shopt -s dotglob
 cd $BUILD_DIR
 
 # update config files
-cp $LP_DIR/conf/httpd.conf /etc/apache2/apache2.conf
-cp $LP_DIR/conf/php.ini /etc/php5/apache2/
+#cp $LP_DIR/conf/httpd.conf /etc/apache2/apache2.conf
+#cp $LP_DIR/conf/php.ini /etc/php5/apache2/
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
 # Create Bootscript
