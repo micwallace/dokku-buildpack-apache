@@ -4,6 +4,9 @@
 # fail fast
 set -e
 
+APACHE_PATH=""
+PHP_PATH=""
+
 BIN_DIR=$(dirname $0)
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -15,8 +18,8 @@ shopt -s dotglob
 cd $BUILD_DIR
 
 # update config files
-#cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
-#cp $LP_DIR/conf/php.ini php
+cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
+cp $LP_DIR/conf/php.ini php
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
 # Create Bootscript
@@ -39,10 +42,13 @@ fi
 # Uncomment if you want to try to get fpm working
 #echo "Launching php"
 #exec php-fpm -p "/app/php"
+
+echo "Launching apache"
+exec service apache2 start
+#exec /usr/sbin/apache2 -DNO_DETACH
 echo "Launching nodejs"
-exec node /app/api/server.js &
-#echo "Launching apache"
-#exec /app/apache/bin/httpd -DNO_DETACH
+exec node /app/api/server.js
+
 EOF
 
 chmod +x boot.sh
