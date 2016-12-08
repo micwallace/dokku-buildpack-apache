@@ -17,6 +17,9 @@ shopt -s dotglob
 #cp $LP_DIR/conf/php.ini php
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
+# enable apache modules
+a2enmod proxy_http proxy_wstunnel rewrite
+
 # Create Bootscript
 cat >>boot.sh <<EOF
 # runtime permissions
