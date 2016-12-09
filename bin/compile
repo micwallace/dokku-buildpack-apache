@@ -24,6 +24,7 @@ a2enmod proxy proxy_wstunnel
 
 # Create Bootscript
 cat >>boot.sh <<EOF
+
 # runtime permissions
 chgrp -R www-data /app
 chmod 644 -R /app
@@ -32,9 +33,12 @@ chmod 664 -R /app/library/wpos/.config.json
 if [ -d /app/docs ]; then
   chmod 664 -R /app/docs
 fi
-#for var in \`env|cut -f1 -d=\`; do
-#echo "PassEnv \$var" >> /app/apache2.conf;
-#done
+
+# Copy Env Vars to apache
+for var in \`env|cut -f1 -d=\`; do
+    echo "PassEnv \$var" >> /app/apache2.conf;
+done
+
 #touch /app/apache/logs/error_log
 #touch /app/apache/logs/access_log
 tail -F /var/log/apache2/error.log &
