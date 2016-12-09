@@ -15,7 +15,8 @@ shopt -s dotglob
 cd $BUILD_DIR
 
 # update config files
-cp $LP_DIR/conf/apache2.conf .
+mkdir var
+cp $LP_DIR/conf/apache2.conf var/
 #cp $LP_DIR/conf/php.ini /etc/php5/apache2/
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
@@ -41,11 +42,11 @@ fi
 
 # Copy Env Vars to apache
 for var in \`env|cut -f1 -d=\`; do
-    echo "PassEnv \$var" >> /app/apache2.conf;
+    echo "PassEnv \$var" >> /app/var/apache2.conf;
 done
 
-tail -F /var/log/apache2/error.log &
-#tail -F /var/log/apache2/access.log &
+tail -F var/apache2/error.log &
+#tail -F var/apache2/error.log &
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
@@ -59,7 +60,7 @@ echo "Launching nodejs"
 exec node /app/api/server.js
 
 echo "Launching apache"
-exec /usr/sbin/apache2 -f /app/apache2.conf -DNO_DETACH
+exec /usr/sbin/apache2 -f /app/var/apache2.conf -DNO_DETACH
 
 EOF
 
