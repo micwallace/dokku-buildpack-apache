@@ -19,9 +19,6 @@ cp $LP_DIR/conf/apache2.conf .
 #cp $LP_DIR/conf/php.ini /etc/php5/apache2/
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
-# enable apache modules
-a2enmod proxy proxy_wstunnel
-
 # Create Bootscript
 cat >>boot.sh <<EOF
 
