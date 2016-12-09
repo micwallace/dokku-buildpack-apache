@@ -44,7 +44,7 @@ LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 #exec php-fpm -p "/app/php"
 
 echo "Launching nodejs"
-exec node /app/api/server.js
+exec nodejs /app/api/server.js
 
 echo "Launching apache"
 exec /usr/sbin/apache2 -f /app/apache2.conf -DNO_DETACH
