@@ -37,6 +37,7 @@ fi
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
+LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 
 # Uncomment if you want to try to get fpm working
 #echo "Launching php"
