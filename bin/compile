@@ -45,6 +45,7 @@ for var in \`env|cut -f1 -d=\`; do
     echo "PassEnv \$var" >> /app/var/apache2.conf;
 done
 
+touch -F var/apache2/error.log
 tail -F var/apache2/error.log &
 #tail -F var/apache2/error.log &
 
