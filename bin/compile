@@ -19,6 +19,9 @@ cp $LP_DIR/conf/apache2.conf .
 #cp $LP_DIR/conf/php.ini /etc/php5/apache2/
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
+# enable apache modules
+a2enmod proxy proxy_wstunnel
+
 # Create Bootscript
 cat >>boot.sh <<EOF
 # runtime permissions
@@ -32,8 +35,8 @@ fi
 #done
 #touch /app/apache/logs/error_log
 #touch /app/apache/logs/access_log
-#tail -F /app/apache/logs/error_log &
-#tail -F /app/apache/logs/access_log &
+tail -F /var/log/apache2/error.log &
+tail -F /var/log/apache2/access.log &
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
