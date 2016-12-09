@@ -21,7 +21,7 @@ cp $LP_DIR/conf/apache2.conf .
 
 # permissions
 # echo "-----> Setting file permissions"
-adduser daemon www-data
+#adduser daemon www-data
 chgrp www-data -R /app
 chmod 644 -R /app/library
 chmod 664 -R /app/library/wpos/.config.json
