@@ -19,13 +19,21 @@ cp $LP_DIR/conf/apache2.conf .
 #cp $LP_DIR/conf/php.ini /etc/php5/apache2/
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
+# permissions
+# echo "-----> Setting file permissions"
+adduser daemon www-data
+chgrp www-data -R /app
+chmod 644 -R /app/library
+chmod 664 -R /app/library/wpos/.config.json
+# chmod 775 -R /app
+
 # Create Bootscript
 cat >>boot.sh <<EOF
 
 # runtime permissions
 #chgrp -R www-data /app
-chmod 644 -R /app/library
-chmod 664 -R /app/library/wpos/.config.json
+#chmod 644 -R /app/library
+#chmod 664 -R /app/library/wpos/.config.json
 # Check if docs directory exists, if not copy template and set permissions
 if [ -d /app/docs ]; then
   chmod 664 -R /app/docs
