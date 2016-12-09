@@ -23,7 +23,7 @@ cp $LP_DIR/conf/apache2.conf .
 cat >>boot.sh <<EOF
 
 # runtime permissions
-chgrp -R www-data /app
+#chgrp -R www-data /app
 chmod 644 -R /app
 chmod 664 -R /app/library/wpos/.config.json
 # Check if docs directory exists, if not copy template and set permissions
