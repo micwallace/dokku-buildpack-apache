@@ -45,9 +45,9 @@ for var in \`env|cut -f1 -d=\`; do
     echo "PassEnv \$var" >> /app/var/apache2.conf;
 done
 
-touch -F var/error.log
-tail -F var/error.log &
-#tail -F var/error.log &
+touch -F /app/var/error.log
+tail -F /app/var/error.log &
+#tail -F /app/var/error.log &
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
@@ -58,7 +58,7 @@ LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 #exec php-fpm -p "/app/php"
 
 echo "Launching apache"
-exec /usr/sbin/apache2 -f /app/var/apache2.conf -DNO_DETACH
+exec /usr/sbin/apache2 -f /app/var/apache2.conf
 
 echo "Launching nodejs"
 exec node /app/api/server.js
