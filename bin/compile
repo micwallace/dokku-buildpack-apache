@@ -45,9 +45,9 @@ for var in \`env|cut -f1 -d=\`; do
     echo "PassEnv \$var" >> /app/var/apache2.conf;
 done
 
-touch -F var/apache2/error.log
-tail -F var/apache2/error.log &
-#tail -F var/apache2/error.log &
+touch -F var/error.log
+tail -F var/error.log &
+#tail -F var/error.log &
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
