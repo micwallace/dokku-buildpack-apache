@@ -16,7 +16,8 @@ cd $BUILD_DIR
 
 # update config files
 mkdir var
-cp $LP_DIR/conf/apache2.conf var/
+mkdir var/apache2
+cp $LP_DIR/conf/apache2.conf var/apache2/
 #cp $LP_DIR/conf/php.ini /etc/php5/apache2/
 #cp $LP_DIR/conf/php-fpm.conf php/etc
 
@@ -45,9 +46,9 @@ for var in \`env|cut -f1 -d=\`; do
     echo "PassEnv \$var" >> /app/var/apache2.conf;
 done
 
-touch -F /app/var/error.log
-tail -F /app/var/error.log &
-#tail -F /app/var/error.log &
+touch /app/var/apache2/error.log
+tail -F /app/var/apache2/error.log &
+#tail -F /app/var/apache2/error.log &
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
@@ -58,7 +59,7 @@ LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 #exec php-fpm -p "/app/php"
 
 echo "Launching apache"
-exec /usr/sbin/apache2 -f /app/var/apache2.conf
+exec /usr/sbin/apache2 -f /app/var/apache2/apache2.conf
 
 echo "Launching nodejs"
 exec node /app/api/server.js
