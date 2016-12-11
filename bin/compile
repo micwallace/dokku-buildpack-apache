@@ -16,6 +16,7 @@ cd $BUILD_DIR
 
 # update config files
 mkdir var
+mkdir var/apache2
 cp -R $LP_DIR/conf var/
 
 # permissions
@@ -44,13 +45,12 @@ for var in \`env|cut -f1 -d=\`; do
     echo "PassEnv \$var" >> /app/var/conf/apache2.conf;
 done
 
-touch /app/var/error.log
-tail -F /app/var/error.log &
-#tail -F /app/var/error.log &
+touch /app/var/apache2/error.log
+tail -F /app/var/apache2/error.log &
+#tail -F /app/var/apache2/error.log &
 
-#export LD_LIBRARY_PATH=/app/php/ext
-#export PHP_INI_SCAN_DIR=/app
-LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+export PHP_INI_SCAN_DIR=/app/var/conf
+export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 
 # Uncomment if you want to try to get fpm working
 #echo "Launching php"
