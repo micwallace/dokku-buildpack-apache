@@ -50,7 +50,7 @@ tail -F /app/var/apache2/error.log &
 #tail -F /app/var/apache2/error.log &
 
 export PHP_INI_SCAN_DIR=/app/var/conf
-export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+#export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 
 # Uncomment if you want to try to get fpm working
 #echo "Launching php"
