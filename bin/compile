@@ -38,8 +38,8 @@ cat >>boot.sh <<EOF
 #chmod 664 -R /app/library/wpos/.config.json
 # Check if docs directory exists, if not copy template and set permissions
 if [ -d /app/docs ]; then
-  find . -type d -exec chmod 775 {} \;
-  find . -type f -exec chmod 664 {} \;
+  find /app/docs -type d -exec chmod 775 {} \;
+  find /app/docs -type f -exec chmod 664 {} \;
 fi
 
 # Copy Env Vars to apache
