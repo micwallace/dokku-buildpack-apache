@@ -16,10 +16,7 @@ cd $BUILD_DIR
 
 # update config files
 mkdir var
-mkdir var/apache2
-cp $LP_DIR/conf/apache2.conf var/apache2/
-#cp $LP_DIR/conf/php.ini /etc/php5/apache2/
-#cp $LP_DIR/conf/php-fpm.conf php/etc
+cp -R $LP_DIR/conf var/
 
 # permissions
 # echo "-----> Setting file permissions"
@@ -44,12 +41,12 @@ fi
 
 # Copy Env Vars to apache
 for var in \`env|cut -f1 -d=\`; do
-    echo "PassEnv \$var" >> /app/var/apache2.conf;
+    echo "PassEnv \$var" >> /app/var/conf/apache2.conf;
 done
 
-touch /app/var/apache2/error.log
-tail -F /app/var/apache2/error.log &
-#tail -F /app/var/apache2/error.log &
+touch /app/var/error.log
+tail -F /app/var/error.log &
+#tail -F /app/var/error.log &
 
 #export LD_LIBRARY_PATH=/app/php/ext
 #export PHP_INI_SCAN_DIR=/app
@@ -63,7 +60,7 @@ echo "Launching nodejs"
 exec node /app/api/server.js &
 
 echo "Launching apache"
-exec /usr/sbin/apache2 -f /app/var/apache2/apache2.conf -DNO_DETACH
+exec /usr/sbin/apache2 -f /app/var/conf/apache2.conf -DNO_DETACH
 
 EOF
 
