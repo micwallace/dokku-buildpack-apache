@@ -60,7 +60,6 @@ LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 #exec php-fpm -p "/app/php"
 
 echo "Launching nodejs"
-DEBUG=*
 exec node /app/api/server.js &
 
 echo "Launching apache"
