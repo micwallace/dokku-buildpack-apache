@@ -62,7 +62,7 @@ echo "Launching apache"
 exec /usr/sbin/apache2 -f /app/var/apache2/apache2.conf -DNO_DETACH
 
 echo "Launching nodejs"
-exec node /app/api/server.js
+exec DEBUG=* node /app/api/server.js
 
 EOF
 
