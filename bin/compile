@@ -4,12 +4,6 @@
 # fail fast
 set -e
 
-# config
-APACHE_VERSION="2.4.7"
-APACHE_PATH="apache"
-PHP_VERSION="5.5.9"
-PHP_PATH="php"
-
 BIN_DIR=$(dirname $0)
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -20,58 +14,54 @@ shopt -s dotglob
 
 cd $BUILD_DIR
 
-APACHE_URL="https://content.wallaceit.com.au/buildpackassets/apache-$APACHE_VERSION.tar.gz"
-echo "-----> Bundling Apache version $APACHE_VERSION"
-curl --silent --max-time 60 --location "$APACHE_URL" | tar xz
-
-PHP_URL="https://content.wallaceit.com.au/buildpackassets/php-$PHP_VERSION.tar.gz"
-echo "-----> Bundling PHP version $PHP_VERSION"
-curl --silent --max-time 60 --location "$PHP_URL" | tar xz
-
 # update config files
-cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
-cp $LP_DIR/conf/php.ini php
-#cp $LP_DIR/conf/php-fpm.conf php/etc
-
-# make php available on bin
-mkdir -p bin
-ln -s /app/php/bin/php bin/php
-ln -s /app/php/sbin/php-fpm bin/php-fpm
-
-# install dependent libraries (fpm testing stuff)
-# echo "-----> Installing dependent libraries"
-# apt-get install -y libjpeg62 libxml2 libcurl3
+mkdir var
+mkdir var/apache2
+cp -R $LP_DIR/conf var/
 
 # permissions
 # echo "-----> Setting file permissions"
-# adduser daemon www-data
-# chgrp www-data -R /app
+#adduser daemon www-data
+#chgrp www-data -R /app
+#chmod 644 -R /app/library
+#chmod 664 -R /app/library/wpos/.config.json
 # chmod 775 -R /app
 
 # Create Bootscript
 cat >>boot.sh <<EOF
+
 # runtime permissions
-chmod 755 -R /app
+#chgrp -R www-data /app
+#chmod 644 -R /app/library
+#chmod 664 -R /app/library/wpos/.config.json
 # Check if docs directory exists, if not copy template and set permissions
 if [ -d /app/docs ]; then
-  chmod 777 -R /app/docs
+  find /app/docs -type d -exec chmod 775 {} \;
+  find /app/docs -type f -exec chmod 664 {} \;
 fi
+
+# Copy Env Vars to apache
 for var in \`env|cut -f1 -d=\`; do
-echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;
+    echo "PassEnv \$var" >> /app/var/conf/apache2.conf;
 done
-touch /app/apache/logs/error_log
-touch /app/apache/logs/access_log
-tail -F /app/apache/logs/error_log &
-tail -F /app/apache/logs/access_log &
-export LD_LIBRARY_PATH=/app/php/ext
-export PHP_INI_SCAN_DIR=/app
+
+touch /app/var/apache2/error.log
+tail -F /app/var/apache2/error.log &
+#tail -F /app/var/apache2/error.log &
+
+#export PHP_INI_SCAN_DIR=/app/var/conf
+LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
+
 # Uncomment if you want to try to get fpm working
 #echo "Launching php"
 #exec php-fpm -p "/app/php"
+
 echo "Launching nodejs"
 exec node /app/api/server.js &
+
 echo "Launching apache"
-exec /app/apache/bin/httpd -DNO_DETACH
+exec /usr/sbin/apache2 -f /app/var/conf/apache2.conf -DNO_DETACH
+
 EOF
 
 chmod +x boot.sh
